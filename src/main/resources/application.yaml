@@ -10,9 +10,13 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     generate-ddl: true
 
 logging:
   level:
-    com.flameking.ourwechat.repository: debug
+    com.flameking.ourwechat.mapper: debug
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.flamking.ourwechat.entity #实体类所在的包
