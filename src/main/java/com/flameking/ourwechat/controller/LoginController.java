@@ -97,25 +97,25 @@ public class LoginController {
             return ResultBean.error("验证码错误");
         }
 
-        // 获取用户名
-        String nickName = user.getNickName();
+        // 获取微信Id
+        String wexinId = user.getWexinId();
         // 获取密码
         String password = user.getPassword();
 
         // 判断是否为空
-        if(!StringUtils.hasLength(nickName) || !StringUtils.hasLength(password)){
-            return ResultBean.error("用户名不能为空");
+        if(!StringUtils.hasLength(wexinId) || !StringUtils.hasLength(password)){
+            return ResultBean.error("微信Id不能为空");
         }
 
         // 获取数据库user 判断是否存在user
-        User realUser = userService.getUserByNickname(nickName);
+        User realUser = userService.getUserByWeixinId(wexinId);
         if(realUser == null){
-            return ResultBean.error("用户名或密码错误");
+            return ResultBean.error("微信Id或密码错误");
         }
 
         // 判断密码是否正确
         if(!password.equals(realUser.getPassword())){
-            return ResultBean.error("用户名或密码错误");
+            return ResultBean.error("微信Id或密码错误");
         }
 
         // 去除密码返回user给前端

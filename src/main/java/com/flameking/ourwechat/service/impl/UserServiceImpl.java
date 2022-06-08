@@ -16,12 +16,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
-    // 根据nickname获取user
+    // 根据微信id查询user
     @Override
-    public User getUserByNickname(String nickName){
+    public User getUserByWeixinId(String weixinId){
         // 构建查询条件
         UserExample example = new UserExample();
-        example.createCriteria().andNickNameEqualTo(nickName);
+        example.createCriteria().andWexinIdEqualTo(weixinId);
 
         List<User> users = userMapper.selectByExample(example);
 
