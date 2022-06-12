@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.Random;
 import java.util.UUID;
@@ -18,6 +19,7 @@ public class SendEmailUtil {
     @Autowired
     private RedisUtil redisUtil;
 
+    // 发送邮件
     public String sendEmail(String mail, String message) {
         final String[] msg = {message,mail};
 
@@ -71,5 +73,27 @@ public class SendEmailUtil {
             sb.append(ch);
         }
         return sb.toString();
+    }
+
+    /**
+     *  判断验证码是否正确
+     *  根据isEmail判断是 邮箱登录or账号登录
+     */
+    public boolean validate(String key,String code,boolean isEmail){
+        String constant = Const.CAPTCHA_KEY;
+        if(isEmail){
+            constant = Const.EMAIL_KEY;
+        }
+        // 判断key和code 是否为空
+        if (!StringUtils.hasLength(code) || !StringUtils.hasLength(key)) {
+            return false;
+        }
+        // 验证验证码的正确
+        if (!code.equals(redisUtil.hget(constant, key))) {
+            return false;
+        }
+        // 一次性使用
+        redisUtil.hdel(constant, key);
+        return true;
     }
 }

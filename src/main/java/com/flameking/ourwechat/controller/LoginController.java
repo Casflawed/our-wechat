@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.UUID;
 import sun.misc.BASE64Encoder;
 
-@RequestMapping("/login")
+@RequestMapping("/api/login")
 @RestController
 public class LoginController {
 
@@ -93,7 +93,7 @@ public class LoginController {
                                      @PathVariable("code") String code){
 
         // 判断验证码是否正确
-        if( !validate(key, code, false) ){
+        if( !sendEmailUtil.validate(key, code, false) ){
             return ResultBean.error("验证码错误");
         }
 
@@ -108,7 +108,7 @@ public class LoginController {
         }
 
         // 获取数据库user 判断是否存在user
-        User realUser = userService.getUserByWeixinId(wexinId);
+        User realUser = userService.getUserByWexinId(wexinId);
         if(realUser == null){
             return ResultBean.error("微信Id或密码错误");
         }
@@ -144,7 +144,7 @@ public class LoginController {
         }
 
         // 判断验证码是否正确
-        if(!validate(key,code,true)){
+        if(!sendEmailUtil.validate(key,code,true)){
             return ResultBean.error("邮箱不存在或验证码错误");
         }
 
@@ -153,25 +153,5 @@ public class LoginController {
     }
 
 
-    /**
-     *  判断验证码是否正确
-     *  根据isEmail判断是 邮箱登录or账号登录
-     */
-    public boolean validate(String key,String code,boolean isEmail){
-        String constant = Const.CAPTCHA_KEY;
-        if(isEmail){
-            constant = Const.EMAIL_KEY;
-        }
-        // 判断key和code 是否为空
-        if (!StringUtils.hasLength(code) || !StringUtils.hasLength(key)) {
-            return false;
-        }
-        // 验证验证码的正确
-        if (!code.equals(redisUtil.hget(constant, key))) {
-            return false;
-        }
-        // 一次性使用
-        redisUtil.hdel(constant, key);
-        return true;
-    }
+
 }
