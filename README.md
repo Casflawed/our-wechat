@@ -20,3 +20,5 @@
 ## 开发日志
 ### 搭建基本的项目目录结构，引入Spring Data JPA-flameking-22-06.04
 ### 弃用Spring Data JPA，改用Mybatis，建表、创建实体类、确定功能需求-flameking-22.06.06
+### 完成登录相关功能接口  CZH-22.06.08
+### 完成注册相关功能接口  CZH-22.06.12
