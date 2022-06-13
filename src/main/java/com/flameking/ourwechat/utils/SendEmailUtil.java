@@ -43,7 +43,7 @@ public class SendEmailUtil {
                 message.setSubject("wechat - 验证码");
                 message.setText(msg[0]);
                 //管理员邮箱
-                message.setFrom("1902936138@qq.com");
+                message.setFrom("2711554770@qq.com");
                 //被发送人邮箱
                 message.setTo(msg[1]);
                 //开始发送

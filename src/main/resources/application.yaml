@@ -1,3 +1,9 @@
+wechat:
+  time:
+    unit: 12
+    offset: 5
+  salt: 0123456789flameking@
+
 server:
   port: 8080
 spring:
@@ -29,8 +35,8 @@ spring:
   mail:
     default-encoding: utf-8
     host: smtp.qq.com
-    username: 1902936138@qq.com
-    password:
+    username: 2711554770@qq.com
+    password: wjkqourdxaqvdcha
     properties:
       mail:
         smtp:
@@ -38,12 +44,6 @@ spring:
           starttls:
             enable: true
             required: true
-
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: create
-    generate-ddl: true
 
 logging:
   level:

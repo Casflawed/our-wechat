@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "time.unit",
+      "type": "java.lang.String",
+      "description": "Description for time.unit."
+  }
+] }

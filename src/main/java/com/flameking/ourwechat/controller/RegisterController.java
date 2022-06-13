@@ -4,7 +4,6 @@ package com.flameking.ourwechat.controller;
 import com.flameking.ourwechat.entity.User;
 import com.flameking.ourwechat.service.UserService;
 import com.flameking.ourwechat.support.ResultBean;
-import com.flameking.ourwechat.utils.RedisUtil;
 import com.flameking.ourwechat.utils.SendEmailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
