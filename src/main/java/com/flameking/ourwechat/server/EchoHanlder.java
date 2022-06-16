@@ -1,9 +1,8 @@
 package com.flameking.ourwechat.server;
 
 import com.alibaba.fastjson.JSON;
-import com.flameking.ourwechat.protocol.ClientMsgProtocol;
+import com.flameking.ourwechat.protocol.GroupChatRequestMessage;
 import com.flameking.ourwechat.utils.ChannelGroupFactory;
-import com.flameking.ourwechat.utils.MsgUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
@@ -110,19 +109,12 @@ public class EchoHanlder extends ChannelInboundHandlerAdapter {
       }
 
       String request = ((TextWebSocketFrame) webSocketFrame).text();
-      log.debug("服务端收到：", request);
+      log.debug("服务端收到：{}", request);
 
-      ClientMsgProtocol clientMsgProtocol = JSON.parseObject(request, ClientMsgProtocol.class);
-      //1请求个人信息
-      if (1 == clientMsgProtocol.getType()) {
-        ctx.channel().writeAndFlush(MsgUtil.buildMsgOwner(ctx.channel().id().toString()));
-        return;
-      }
+      GroupChatRequestMessage groupChatRequestMessage = JSON.parseObject(request, GroupChatRequestMessage.class);
       //群发消息
-      if (2 == clientMsgProtocol.getType()) {
-        TextWebSocketFrame textWebSocketFrame = MsgUtil.buildMsgAll(ctx.channel().id().toString(), clientMsgProtocol.getMsgInfo());
-        ChannelGroupFactory.channelGroup.writeAndFlush(textWebSocketFrame);
-      }
+//      TextWebSocketFrame textWebSocketFrame = MsgUtil.buildMsgAll(ctx.channel().id().toString(), groupChatRequestMessage.getMsgInfo());
+//      ChannelGroupFactory.channelGroup.writeAndFlush(textWebSocketFrame);
 
     }
 

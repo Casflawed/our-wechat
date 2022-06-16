@@ -1,7 +1,7 @@
 package com.flameking.ourwechat.controller;
 
-import com.flameking.ourwechat.support.Const;
 import com.flameking.ourwechat.entity.User;
+import com.flameking.ourwechat.support.Const;
 import com.flameking.ourwechat.service.UserService;
 import com.flameking.ourwechat.support.ResultBean;
 import com.flameking.ourwechat.utils.JWTUtil;
@@ -17,7 +17,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import sun.misc.BASE64Encoder;

@@ -5,7 +5,6 @@ import com.flameking.ourwechat.entity.UserExample;
 import com.flameking.ourwechat.mapper.UserMapper;
 import com.flameking.ourwechat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
