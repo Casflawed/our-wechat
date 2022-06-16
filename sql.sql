@@ -8,7 +8,7 @@
 CREATE TABLE `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `address` varchar(50) DEFAULT NULL COMMENT '用户地址',
-  `avatar_url` varchar(50) DEFAULT NULL COMMENT '用户头像',
+  `avatar_url` varchar(100) DEFAULT NULL COMMENT '用户头像',
   `create_date` datetime DEFAULT NULL COMMENT '注册日期',
   `email` varchar(50) DEFAULT NULL COMMENT '注册邮箱',
   `nick_name` varchar(50) DEFAULT NULL COMMENT '昵称',
@@ -41,7 +41,7 @@ CREATE TABLE `group_user` (
 -- group表
 CREATE TABLE `group` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `avatar_url` varchar(50) DEFAULT NULL COMMENT '群组头像URL',
+  `avatar_url` varchar(100) DEFAULT NULL COMMENT '群组头像URL',
   `create_date` datetime DEFAULT NULL COMMENT '群组创建日期',
   `name` varchar(50) NOT NULL COMMENT '群组名称',
   PRIMARY KEY (`id`)
@@ -51,7 +51,7 @@ CREATE TABLE `group` (
 CREATE TABLE `friend` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `accept_date` datetime DEFAULT NULL COMMENT '成为好友的日期',
-  `avatar_url` varchar(50) DEFAULT NULL COMMENT '好友头像URL',
+  `avatar_url` varchar(100) DEFAULT NULL COMMENT '好友头像URL',
   `friend_id` bigint(20) NOT NULL COMMENT '好友Id',
   `remark` varchar(50) DEFAULT NULL COMMENT '备注',
   `self_id` bigint(20) NOT NULL COMMENT '本人Id',

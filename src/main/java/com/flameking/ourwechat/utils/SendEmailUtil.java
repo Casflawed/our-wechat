@@ -1,6 +1,6 @@
 package com.flameking.ourwechat.utils;
 
-import com.flameking.ourwechat.common.Const;
+import com.flameking.ourwechat.support.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

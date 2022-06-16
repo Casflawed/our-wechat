@@ -1,17 +1,20 @@
 wechat:
   time:
-    unit: 12
+    unit: 5
     offset: 5
   salt: 0123456789flameking@
 
 server:
   port: 8080
+
+
+
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/ourwechat?characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
-    password: 123456
+    password: ww2711554770
   redis:
     # Redis数据库索引（默认为0）
     database: 0
@@ -47,7 +50,7 @@ spring:
 
 logging:
   level:
-    com.flameking.ourwechat.mapper: debug
+    com.flameking.ourwechat: debug
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml

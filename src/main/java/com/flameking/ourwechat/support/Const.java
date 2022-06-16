@@ -1,4 +1,4 @@
-package com.flameking.ourwechat.common;
+package com.flameking.ourwechat.support;
 
 public class Const {
 

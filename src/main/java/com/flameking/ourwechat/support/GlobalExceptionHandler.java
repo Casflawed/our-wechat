@@ -14,7 +14,7 @@ public class GlobalExceptionHandler {
   public ResultBean resolveDuplicateKeyException(TokenVerifyFailedException exception, HttpServletRequest request,
                                                    HttpServletResponse response) throws IOException {
 
-    return ResultBean.error("token校验失败", -1);
+    return ResultBean.error("token不合法", -1);
 
   }
 }

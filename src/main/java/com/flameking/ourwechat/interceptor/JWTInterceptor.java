@@ -1,11 +1,11 @@
 package com.flameking.ourwechat.interceptor;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.flameking.ourwechat.exception.TokenVerifyFailedException;
 import com.flameking.ourwechat.utils.JWTUtil;
 import com.flameking.ourwechat.utils.SpringContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

@@ -4,19 +4,21 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator.*;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Calendar;
 import java.util.HashMap;
 
+@Slf4j
 @Component("JWTUtil")
 public class JWTUtil {
 
-  // 时间偏移单位
+  // datetime偏移单位
   @Value("${wechat.time.unit}")
   private int TIMEOFFSETUNIT;
-  // 时间偏移量
+  // datatime偏移量
   @Value("${wechat.time.offset}")
   private int TIMEOFFSET;
   // 盐值（注意保密）
@@ -26,8 +28,12 @@ public class JWTUtil {
   private final Calendar INSTANCE = Calendar.getInstance();
 
   {
-    INSTANCE.add(TIMEOFFSETUNIT, TIMEOFFSET);
+    // 初始化类的时候，@value还未起作用
+    log.debug("单位：{}", TIMEOFFSETUNIT);
+    log.debug("偏移量：{}", TIMEOFFSET);
   }
+
+
 
   /**
    * 获取token
@@ -47,10 +53,11 @@ public class JWTUtil {
       builder.withClaim(k, v);
     });
     // 过期时间
+    INSTANCE.add(TIMEOFFSETUNIT, TIMEOFFSET);
     builder.withExpiresAt(INSTANCE.getTime());
+    log.debug("token有效期至：{}", INSTANCE.getTime());
     // signature
     String token = builder.sign(Algorithm.HMAC256(SALT));
-
     return token;
   }
 

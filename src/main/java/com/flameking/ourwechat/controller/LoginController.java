@@ -1,9 +1,10 @@
 package com.flameking.ourwechat.controller;
 
-import com.flameking.ourwechat.common.Const;
+import com.flameking.ourwechat.support.Const;
 import com.flameking.ourwechat.entity.User;
 import com.flameking.ourwechat.service.UserService;
 import com.flameking.ourwechat.support.ResultBean;
+import com.flameking.ourwechat.utils.JWTUtil;
 import com.flameking.ourwechat.utils.RedisUtil;
 import com.flameking.ourwechat.utils.SendEmailUtil;
 import com.google.code.kaptcha.Producer;
@@ -16,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import sun.misc.BASE64Encoder;
@@ -35,6 +37,9 @@ public class LoginController {
 
   @Autowired
   private UserService userService;
+
+  @Autowired
+  private JWTUtil jwtUtil;
 
 
   /**
@@ -123,7 +128,15 @@ public class LoginController {
     // 去除密码返回user给前端
     realUser.setPassword("");
 
-    return ResultBean.success("登录成功", realUser);
+
+
+    HashMap<String, String> payload = new HashMap<>();
+    payload.put("userId", String.valueOf(realUser.getId()));
+    payload.put("avatarUrl", realUser.getAvatarUrl());
+    payload.put("weixinId", realUser.getWexinId());
+
+    String token = jwtUtil.getToken(payload);
+    return ResultBean.success("登录成功", token);
   }
 
 
