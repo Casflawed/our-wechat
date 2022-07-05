@@ -1,7 +1,7 @@
 package com.flameking.ourwechat.server;
 
 import com.alibaba.fastjson.JSON;
-import com.flameking.ourwechat.protocol.GroupChatRequestMessage;
+import com.flameking.ourwechat.protocol.Message;
 import com.flameking.ourwechat.utils.ChannelGroupFactory;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -16,7 +16,7 @@ import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class EchoHanlder extends ChannelInboundHandlerAdapter {
+public class ParseMessageObjectHanlder extends ChannelInboundHandlerAdapter {
   // 服务器方的Socket连接、关闭握手
   private WebSocketServerHandshaker handshaker;
 
@@ -28,9 +28,6 @@ public class EchoHanlder extends ChannelInboundHandlerAdapter {
     SocketChannel channel = (SocketChannel) ctx.channel();
     log.debug("一个客户端已经连接上服务器，地址是{}，端口号是{}",
             channel.localAddress().getHostString(), channel.localAddress().getPort());
-    // 客户端一旦连接，将它加入群组
-    ChannelGroupFactory.channelGroup.add(ctx.channel());
-    super.channelActive(ctx);
   }
 
   /**
@@ -39,9 +36,6 @@ public class EchoHanlder extends ChannelInboundHandlerAdapter {
   @Override
   public void channelInactive(ChannelHandlerContext ctx) throws Exception {
     log.debug("位置是{}的客户端断开连接", ctx.channel().localAddress().toString());
-    // 客户端一旦断开连接，从群聊中删除
-    ChannelGroupFactory.channelGroup.remove(ctx.channel());
-    super.channelInactive(ctx);
   }
 
   @Override
@@ -108,14 +102,17 @@ public class EchoHanlder extends ChannelInboundHandlerAdapter {
         throw new Exception("仅支持文本格式");
       }
 
-      String request = ((TextWebSocketFrame) webSocketFrame).text();
-      log.debug("服务端收到：{}", request);
-
-      GroupChatRequestMessage groupChatRequestMessage = JSON.parseObject(request, GroupChatRequestMessage.class);
-      //群发消息
-//      TextWebSocketFrame textWebSocketFrame = MsgUtil.buildMsgAll(ctx.channel().id().toString(), groupChatRequestMessage.getMsgInfo());
-//      ChannelGroupFactory.channelGroup.writeAndFlush(textWebSocketFrame);
-
+      String requestBody = ((TextWebSocketFrame) webSocketFrame).text();
+      System.out.println(requestBody);
+      log.debug("服务端收到：{}", requestBody);
+      // 解析消息类型
+      String[] split = requestBody.split(":");
+      int messageType = Integer.parseInt(split[1].charAt(0) + "");
+      Class<?> messageClass = Message.getMessageClass(messageType);
+      Object object = JSON.parseObject(requestBody, messageClass);
+      log.debug("对象类型：{}",object.getClass());
+      // 将消息类型处理好后，发送给其他Handlder
+      super.channelRead(ctx, object);
     }
 
   }

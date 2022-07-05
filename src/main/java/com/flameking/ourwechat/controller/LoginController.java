@@ -134,6 +134,7 @@ public class LoginController {
     payload.put("avatarUrl", realUser.getAvatarUrl());
     payload.put("weixinId", realUser.getWexinId());
 
+
     String token = jwtUtil.getToken(payload);
     return ResultBean.success("登录成功", token);
   }

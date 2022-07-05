@@ -20,6 +20,8 @@ public class MyChannelInitializer extends ChannelInitializer<SocketChannel> {
     // 大文件处理器
     pipeline.addLast("http-chunked", new ChunkedWriteHandler());
     // 自定义处理器
-    pipeline.addLast(new EchoHanlder());
+    pipeline.addLast("parse-messageObject", new ParseMessageObjectHanlder());
+    pipeline.addLast("registry-UserChannelId", new RegisterChannelIdHanlder());
+    pipeline.addLast("groupChatMessage-handler", new GroupChatMessageHandler());
   }
 }
